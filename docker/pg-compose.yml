@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16
+    container_name: campusbook
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: campusbook
+      POSTGRES_USER: campusbook
+      POSTGRES_PASSWORD: campusbook
+    ports:
+      - "5433:5432"
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U campusbook"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pg-data:
